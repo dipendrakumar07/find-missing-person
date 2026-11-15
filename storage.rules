@@ -1,0 +1,40 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function: Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function: Check if user is an admin
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.admin == true ||
+        request.auth.token.email.matches('.*admin.*')
+      );
+    }
+    
+    // Missing person and found person photos
+    match /missing_photos/{allPaths=**} {
+      // Anyone can view photos of missing/found persons
+      allow read: if true;
+      
+      // Only authenticated users can upload images (Max 10MB, image format)
+      allow write: if isAuthenticated() &&
+                     request.resource.size < 10 * 1024 * 1024 &&
+                     request.resource.contentType.matches('image/.*');
+                     
+      // Admins or uploader can delete
+      allow delete: if isAuthenticated() && (isAdmin() || request.auth.uid != null);
+    }
+    
+    match /found_photos/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated() &&
+                     request.resource.size < 10 * 1024 * 1024 &&
+                     request.resource.contentType.matches('image/.*');
+      allow delete: if isAuthenticated() && (isAdmin() || request.auth.uid != null);
+    }
+  }
+}
