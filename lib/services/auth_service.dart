@@ -531,19 +531,19 @@ class AuthService extends ChangeNotifier {
             if (methods.isEmpty) {
               return {
                 'success': false,
-                'message': 'Iss email se koi account nahi mila! Kripya sahi email dalein ya naya account banayein.',
+                'message': 'No account found with this email. Please check your email or create a new account.',
               };
             }
           } catch (e) {
             return {
               'success': false,
-              'message': 'Iss email se koi account nahi mila! Kripya sahi email dalein ya naya account banayein.',
+              'message': 'No account found with this email. Please check your email or create a new account.',
             };
           }
         } else {
           return {
             'success': false,
-            'message': 'Iss mobile number se koi account nahi mila! Kripya sahi number dalein.',
+            'message': 'No account found with this mobile number. Please check the number and try again.',
           };
         }
       }
@@ -563,7 +563,7 @@ class AuthService extends ChangeNotifier {
         return {
           'success': false,
           'isGoogle': true,
-          'message': 'Ye account Google Sign-In se register hua hai. Iske liye password reset ki jarurat nahi hai. Aap direct "Continue with Google" button se login kar sakte hain.',
+          'message': 'This account is registered with Google Sign-In. Password reset is not needed. You can log in directly using "Continue with Google".',
         };
       }
 
@@ -581,18 +581,18 @@ class AuthService extends ChangeNotifier {
       return {
         'success': true,
         'email': targetEmail,
-        'message': 'Password reset link bhej diya gaya hai! Kripya apna email ($targetEmail) check karein aur link par click karke naya password set karein.',
+        'message': 'Password reset link sent! Please check your email ($targetEmail) and follow the link to reset your password.',
       };
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return {
           'success': false,
-          'message': 'Iss email se koi account nahi mila! Kripya sahi email dalein ya naya account banayein.',
+          'message': 'No account found with this email. Please check your email or create a new account.',
         };
       } else if (e.code == 'invalid-email') {
         return {
           'success': false,
-          'message': 'Kripya sahi format me email address enter karein.',
+          'message': 'Please enter a valid email address.',
         };
       }
       return {

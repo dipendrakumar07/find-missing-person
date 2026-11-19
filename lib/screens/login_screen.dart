@@ -364,12 +364,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Password reset link aapke email (${result['email']}) par bhej diya gaya hai.',
+                                'A password reset link has been sent to your email (${result['email']}).',
                                 style: const TextStyle(fontSize: 14, color: Color(0xFF1E293B), fontWeight: FontWeight.w600),
                               ),
                               const SizedBox(height: 12),
                               const Text(
-                                '1. Apna Gmail / Email inbox open karein.\n2. Firebase reset link par click karke naya password set karein.\n3. Wapas app me aakar naye password se login karein.',
+                                '1. Open your Gmail / Email inbox.\n2. Click the password reset link to set your new password.\n3. Return to the app and sign in with your new password.',
                                 style: TextStyle(fontSize: 13, color: Color(0xFF64748B), height: 1.5),
                               ),
                             ],
